@@ -68,7 +68,7 @@ button {
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
-  width: 109%;  /* Ensure button takes full width */
+  width: 100%;  /* Ensure button takes full width */
 }
 
 button:hover {
@@ -79,4 +79,142 @@ button:hover {
   color: #d9534f;
   font-size: 14px;
   margin-top: 10px;
+}
+
+.navbar {
+  background-color: #C38282;
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.navbar h1 {
+  font-size: 2rem;
+}
+h1 {
+  color: #333;
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+}
+
+.navbar ul li {
+  margin-left: 20px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #180202;
+  font-weight: bold;
+  transition: color 0.3s;
+  font-size: 20px;
+}
+
+.navbar a:hover {
+  color: none;
+}
+
+.home-page {
+  padding: 20px;
+  text-align: center;
+}
+
+.home-page h1 {
+  font-size: 2rem;
+  color: #090909;
+}
+
+.home-page p {
+  font-size: 1.2rem;
+  margin-top: 20px;
+}
+
+.cta-signup {
+  background-color: #885353;
+  color: rgb(255, 255, 255);
+  padding: 10px 30px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cta-signup:hover {
+  background-color: #C38282;
+}
+
+.matches-list {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.matches-list .match-card {
+  margin: 10px;
+}
+
+.match-card {
+  background-color: rgb(172, 157, 142); 
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #885353;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 280px;
+  margin: 10px;
+  transition: transform 0.3s;
+}
+
+.match-card:hover {
+  transform: scale(1.05);
+}
+
+.match-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.match-info {
+  padding-top: 15px;
+  text-align: center;
+}
+
+.match-info h3 {
+  font-size: 1.5rem;
+  color: brown;
+}
+
+.interests {
+  margin-top: 10px;
+}
+
+.message-btn {
+  background-color: #885353;
+  color: rgb(255, 255, 255);
+  border: none;
+  padding: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.message-btn:hover {
+  background-color: #C38282;
+}
+
+.interest-tag {
+  background-color: #885353;
+  color: white;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 20px;
+  font-size: 1rem;
 }
