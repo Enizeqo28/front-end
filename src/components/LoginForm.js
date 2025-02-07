@@ -15,8 +15,6 @@ const LoginForm = () => {
       return;
     }
 
-    // Assuming login is successful, navigate to the home page
-    navigate('/home');  // navigate instead of history.push
   };
 
   return (

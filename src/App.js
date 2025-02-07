@@ -4,9 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginForm from './components/LoginForm';
 import peachImage from './peach.jpg';  // Import the image here
 
-// Home page component
-const Home = () => <h2>Welcome to the home page!</h2>;
-
 const App = () => {
   const appStyles = {
     backgroundImage: `url(${peachImage})`, // Dynamically set the background image
@@ -25,7 +22,7 @@ const App = () => {
         <h1>Welcome Back to Connectify! We Missed You!</h1>
         <Routes>
           <Route path="/" element={<LoginForm />} />
-          <Route path="/home" element={<Home />} />
+          {/* Removed the /home route */}
         </Routes>
       </div>
     </Router>
