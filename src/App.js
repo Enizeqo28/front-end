@@ -6,7 +6,7 @@ import LoginForm from "./components/LoginForm";
 import Profile from "./components/profile";
 import HomePage from "./components/HomePage"; 
 import peachImage from "./peach.jpg"; // Background image
-
+import Signup from "./components/Signup";
 const App = () => {
   const appStyles = {
     backgroundImage: `url(${peachImage})`,
@@ -23,9 +23,10 @@ const App = () => {
     <Router>
       <div className="App" style={appStyles}>
         <Routes>
-          <Route path="/" element={<LoginForm />} />
+          <Route path="/login" element={<LoginForm />} />
           <Route path="/Home" element={<HomePage />} /> 
           <Route path="/profile" element={<Profile />} /> {/* ✅ Added Profile Route */}
+	  <Route path="/signup" element={<Signup />} />
         </Routes>
       </div>
     </Router>
