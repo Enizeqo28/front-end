@@ -26,7 +26,7 @@ const FormContainer = styled(Container)({
   background: "rgba(253, 252, 230, 0.15)",
   padding: "30px",
   borderRadius: "10px",
-  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.8)",
   width: "90%",
   maxWidth: "600px",
   minWidth: "450px",
