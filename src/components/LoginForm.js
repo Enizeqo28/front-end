@@ -79,7 +79,7 @@ const LoginForm = () => {
       <Overlay />
       <FormContainer>
         <Typography variant="h4" gutterBottom style={{ fontWeight: "bold", color: "#ff758c" }}>
-          Log In to Your Account
+          Log in to start making friends! :)
         </Typography>
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
           <StyledTextField
