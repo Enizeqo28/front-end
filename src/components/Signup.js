@@ -19,39 +19,37 @@ const Overlay = styled("div")({
   position: "absolute",
   width: "100%",
   height: "100%",
-  //backgroundColor: "rgba(0, 0, 0, 0.0)", // Dark overlay for better readability
 });
 
 const FormContainer = styled(Container)({
-  background: "rgba(253, 252, 230, 0.15)",
-  padding: "30px",
+  background: "rgba(253, 252, 230, 0.45)",
+  padding: "90px",
   borderRadius: "10px",
-  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
-  width: "90%",  // Ensures responsiveness
-  maxWidth: "600px",  // ⬅️ Increase width explicitly
-  minWidth: "450px",  // ⬅️ Ensures a minimum width
+  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.3)",
+  width: "90%",
+  maxWidth: "600px",
+  minWidth: "450px",
   textAlign: "center",
   zIndex: 2,
 });
 
-
 const StyledButton = styled(Button)({
-  background: "linear-gradient(to right, #ff7eb3, #ff758c)", // Gradient effect
+  background: "linear-gradient(to right, #893d3d, #958f8f)",
   color: "white",
   fontWeight: "bold",
   padding: "12px",
   transition: "0.3s",
   "&:hover": {
-    background: "linear-gradient(to right, #ff758c, #ff7eb3)",
+    background: "linear-gradient(to right, #ae4040, #9f826d)",
     transform: "scale(1.05)",
   },
 });
 
 const StyledTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
-    "& fieldset":{ borderColor: "#ff758c" },
-    "&:hover fieldset": { borderColor: "#ff7eb3" },
-    "&.Mui-focused fieldset": { borderColor: "#ff7eb3", borderWidth: "5px" },
+    "& fieldset": { borderColor: "#89574c" },
+    "&:hover fieldset": { borderColor: "#89574c" },
+    "&.Mui-focused fieldset": { borderColor: "#89574c", borderWidth: "5px" },
   },
 });
 
@@ -59,6 +57,7 @@ const Signup = () => {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
+    age: "",
     password: "",
     confirmPassword: "",
   });
@@ -73,6 +72,9 @@ const Signup = () => {
     let newErrors = {};
     if (!formData.fullName) newErrors.fullName = "Full name is required";
     if (!formData.email.includes("@")) newErrors.email = "Invalid email format";
+    if (!formData.age || isNaN(formData.age) || formData.age < 18) {
+      newErrors.age = "Sorry, you must be at least 18 years old to create an account";
+    }
     if (formData.password.length < 6) newErrors.password = "Password must be at least 6 characters";
     if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "Passwords do not match";
 
@@ -92,7 +94,7 @@ const Signup = () => {
     <BackgroundContainer>
       <Overlay />
       <FormContainer>
-        <Typography variant="h4" gutterBottom style={{ fontWeight: "bold", color: "#ff758c" }}>
+        <Typography variant="h4" gutterBottom style={{ fontWeight: "bold", color: "#89574c" }}>
           Sign Up Today
         </Typography>
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
@@ -113,6 +115,16 @@ const Signup = () => {
             onChange={handleChange} 
             error={!!errors.email} 
             helperText={errors.email} 
+            required fullWidth 
+          />
+          <StyledTextField 
+            label="Age" 
+            type="number" 
+            name="age" 
+            value={formData.age} 
+            onChange={handleChange} 
+            error={!!errors.age} 
+            helperText={errors.age} 
             required fullWidth 
           />
           <StyledTextField 
