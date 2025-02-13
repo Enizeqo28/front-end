@@ -22,11 +22,19 @@ export default function HomePage() {
     <div className="main">
       <div className="navbar">
         <h1 className="logo">Connectify</h1>
+        <div className="nav-right">
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/Home">Home</Link>
           </li>
         </ul>
+        <ul>
+          <li>
+            <Link to="/AboutUS">About Us</Link>
+          </li>
+        </ul>
+        </div>
+        
       </div>
       <div className="home-page">
         <h1>Welcome to Connectify</h1>
