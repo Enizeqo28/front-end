@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { TextField, Button, Container, Typography, Box } from '@mui/material';
+import { TextField, Button, Container, Typography, Box, InputAdornment } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { Email, Lock } from '@mui/icons-material';
 import peachImage from "../peach.jpg"; // Ensure correct path
 
 const BackgroundContainer = styled("div")({
@@ -23,10 +24,10 @@ const Overlay = styled("div")({
 });
 
 const FormContainer = styled(Container)({
-  background: "rgba(253, 252, 230, 0.15)",
+  background: "rgba(253, 252, 230, 0.4)",
   padding: "30px",
   borderRadius: "10px",
-  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.6)",
   width: "90%",
   maxWidth: "600px",
   minWidth: "450px",
@@ -35,22 +36,22 @@ const FormContainer = styled(Container)({
 });
 
 const StyledButton = styled(Button)({
-  background: "linear-gradient(to right, #ff7eb3, #ff758c)",
+  background: "linear-gradient(to right, #89574c, #ae4040)",
   color: "white",
   fontWeight: "bold",
-  padding: "12px",
+  padding: "16px",
   transition: "0.3s",
   "&:hover": {
-    background: "linear-gradient(to right, #ff758c, #ff7eb3)",
+    background: "linear-gradient(to right, #ae4040, #89574c)",
     transform: "scale(1.05)",
   },
 });
 
 const StyledTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
-    "& fieldset": { borderColor: "#ff758c" },
-    "&:hover fieldset": { borderColor: "#ff7eb3" },
-    "&.Mui-focused fieldset": { borderColor: "#ff7eb3", borderWidth: "5px" },
+    "& fieldset": { borderColor: "#89574c" },
+    "&:hover fieldset": { borderColor: "#89574c" },
+    "&.Mui-focused fieldset": { borderColor: "#89574c", borderWidth: "5px" },
   },
 });
 
@@ -78,7 +79,7 @@ const LoginForm = () => {
     <BackgroundContainer>
       <Overlay />
       <FormContainer>
-        <Typography variant="h4" gutterBottom style={{ fontWeight: "bold", color: "#ff758c" }}>
+        <Typography variant="h4" gutterBottom style={{ fontWeight: "bold", color: "#89574c" }}>
           Log in to start making friends! :)
         </Typography>
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
@@ -92,6 +93,13 @@ const LoginForm = () => {
             fullWidth
             error={!!errorMessage}
             helperText={errorMessage && "Please fill in both fields"}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Email style={{ color: "blue" }} />
+                </InputAdornment>
+              ),
+            }}
           />
           <StyledTextField
             label="Password"
@@ -103,12 +111,19 @@ const LoginForm = () => {
             fullWidth
             error={!!errorMessage}
             helperText={errorMessage && "Please fill in both fields"}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Lock style={{ color: "green" }} />
+                </InputAdornment>
+              ),
+            }}
           />
           <StyledButton variant="contained" type="submit">Login</StyledButton>
         </form>
         <Box mt={2}>
           <Typography variant="body2">
-            Don't have an account? <a href="/signup" style={{ color: "#ff758c", fontWeight: "bold" }}>Sign up here</a>
+            Don't have an account? <a href="/signup" style={{ color: "#89574c", fontWeight: "bold" }}>Sign up here</a>
           </Typography>
         </Box>
       </FormContainer>
