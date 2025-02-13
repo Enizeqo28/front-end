@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { TextField, Button, Container, Typography, Box } from "@mui/material";
+import { TextField, Button, Container, Typography, Box, InputAdornment } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { AccountCircle, Email, Lock, CalendarToday } from "@mui/icons-material";
 import peachImage from "../peach.jpg"; // Ensure correct path
 
 const BackgroundContainer = styled("div")({
@@ -25,10 +26,10 @@ const FormContainer = styled(Container)({
   background: "rgba(253, 252, 230, 0.45)",
   padding: "90px",
   borderRadius: "10px",
-  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.3)",
+  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.6)",
   width: "90%",
   maxWidth: "600px",
-  minWidth: "450px",
+  minWidth: "500px",
   textAlign: "center",
   zIndex: 2,
 });
@@ -37,7 +38,7 @@ const StyledButton = styled(Button)({
   background: "linear-gradient(to right, #893d3d, #958f8f)",
   color: "white",
   fontWeight: "bold",
-  padding: "12px",
+  padding: "16px",
   transition: "0.3s",
   "&:hover": {
     background: "linear-gradient(to right, #ae4040, #9f826d)",
@@ -106,6 +107,13 @@ const Signup = () => {
             error={!!errors.fullName} 
             helperText={errors.fullName} 
             required fullWidth 
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AccountCircle style={{ color: "red" }} />
+                </InputAdornment>
+              ),
+            }}
           />
           <StyledTextField 
             label="Email" 
@@ -116,6 +124,13 @@ const Signup = () => {
             error={!!errors.email} 
             helperText={errors.email} 
             required fullWidth 
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Email style={{ color: "blue" }} />
+                </InputAdornment>
+              ),
+            }}
           />
           <StyledTextField 
             label="Age" 
@@ -126,6 +141,13 @@ const Signup = () => {
             error={!!errors.age} 
             helperText={errors.age} 
             required fullWidth 
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <CalendarToday style={{ color: "black" }} />
+                </InputAdornment>
+              ),
+            }}
           />
           <StyledTextField 
             label="Password" 
@@ -136,6 +158,13 @@ const Signup = () => {
             error={!!errors.password} 
             helperText={errors.password} 
             required fullWidth 
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Lock style={{ color: "green" }} />
+                </InputAdornment>
+              ),
+            }}
           />
           <StyledTextField 
             label="Confirm Password" 
@@ -146,12 +175,23 @@ const Signup = () => {
             error={!!errors.confirmPassword} 
             helperText={errors.confirmPassword} 
             required fullWidth 
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Lock style={{ color: "#89574c" }} />
+                </InputAdornment>
+              ),
+            }}
           />
           <StyledButton variant="contained" type="submit">Sign Up</StyledButton>
         </form>
+        {/* Ensure the login link is visible */}
         <Box mt={2}>
           <Typography variant="body2">
-            Already have an account? <a href="/login" style={{ color: "#ff758c", fontWeight: "bold" }}>Log in here</a>
+            Already have an account?{" "}
+            <a href="/login" style={{ color: "#89574c", fontWeight: "bold", textDecoration: "none" }}>
+              Log in here
+            </a>
           </Typography>
         </Box>
       </FormContainer>
