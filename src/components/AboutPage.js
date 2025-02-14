@@ -34,7 +34,7 @@ export default function AboutPage() {
                     <p>Backend</p>
                 </div>
                 <div className="team-member">
-                    <img src="https://th.bing.com/th/id/OIP.fs5iov9r7FUsMLsO3OOGQAHaHU?w=190&h=188&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Team Member" />
+                    <img src="https://raw.githubusercontent.com/JillianGuo/CAA900-TEMP/refs/heads/main/IMG_4208(2).jpg" alt="Team Member" />
                     <h3>Jiyun Guo</h3>
                     <p>Backend</p>
                 </div>
