@@ -1,4 +1,3 @@
-
 import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -6,8 +5,11 @@ import LoginForm from "./components/LoginForm";
 import Profile from "./components/profile";
 import HomePage from "./components/HomePage"; 
 import AboutPage from "./components/AboutPage";
+import ChatPage from "./components/ChatPage";
 import peachImage from "./peach.jpg"; // Background image
 import Signup from "./components/Signup";
+import WelcomePage from "./components/WelcomePage";
+
 const App = () => {
   const appStyles = {
     backgroundImage: `url(${peachImage})`,
@@ -27,8 +29,10 @@ const App = () => {
           <Route path="/login" element={<LoginForm />} />
           <Route path="/Home" element={<HomePage />} /> 
           <Route path="/AboutUS" element={<AboutPage />} /> 
-          <Route path="/profile" element={<Profile />} /> {/* ✅ Added Profile Route */}
-	  <Route path="/signup" element={<Signup />} />
+          <Route path="/ChatPage" element={<ChatPage />} /> 
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/" element={<WelcomePage />} />
         </Routes>
       </div>
     </Router>

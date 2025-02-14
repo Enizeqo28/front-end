@@ -1,0 +1,13 @@
+import React from "react";
+
+import React from "react";
+
+const LandingPage = () => {
+  return (
+    <div style={{ padding: "20px", fontSize: "24px", color: "blue" }}>
+      Hello, this is a test page!
+    </div>
+  );
+};
+
+export default LandingPage;
