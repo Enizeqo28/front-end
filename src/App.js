@@ -5,7 +5,6 @@ import LoginForm from "./components/LoginForm";
 import Profile from "./components/profile";
 import HomePage from "./components/HomePage"; 
 import AboutPage from "./components/AboutPage";
-import ChatPage from "./components/ChatPage";
 import peachImage from "./peach.jpg"; // Background image
 import Signup from "./components/Signup";
 import WelcomePage from "./components/WelcomePage";
