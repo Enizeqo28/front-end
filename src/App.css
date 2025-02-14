@@ -229,19 +229,13 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-  margin-top: 12%;
 }
 
 .about_us {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
-  border-radius: 10px;
-  background-image: url("./peach.jpg");
+  max-width: 1200px;
+  width: 100%;
   background-repeat: no-repeat;
   background-size: cover;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-family: Arial, sans-serif;
   line-height: 1.6;
 }
