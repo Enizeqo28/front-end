@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  id-token: write # Require write permission to Fetch an OIDC token.
+  id-token: write
   contents: read
 
 jobs:
@@ -28,28 +28,23 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-    #   - name: DOCKER | Login
-    #     uses: azure/docker-login@v2
-    #     with:
-    #       login-server: atcdevacr.azurecr.io
-    #       username: ${{ secrets.AZURE_CLIENT_ID }}
-    #       password: ${{ secrets.AZURE_CLIENT_SECRET }}
-
-      - name: Get ACR access token
-        run: echo "::set-output name=acr_token::$(az acr login --name atcdevacr.azurecr.io --expose-token --output tsv --query accessToken)"
-        id: acr_token
-  
-      - name: Log in to ACR using docker-login@v2
-        uses: azure/docker-login@v2
-        with:
-          login-server: atcdevacr.azurecr.io
-          username: "00000000-0000-0000-0000-000000000000"  # Static username for ACR token auth
-          password: ${{ steps.acr_token.outputs.acr_token }}
-
-      - name: Build and tag Docker image
+      - name: Example Azure CLI Command
         run: |
-            docker build -t myregistry.azurecr.io/my-image:latest .
-    
-      - name: Push image to ACR
+          echo "Executing az account show"
+          az account show
+
+      - name: DOCKER | Login, Build and Push
+        env:
+          ACR: atcdevacr.azurecr.io
+          IMG_NAME: connectify-front
         run: |
-            docker push myregistry.azurecr.io/my-image:latest
+          az login --identity --username $secrets.AZURE_CLIENT_ID
+          az acr login --name $ACR
+
+          IMG=$ACR/$IMG_NAME:$CURRENT_BRANCH
+
+          echo "DOCKER | Build Image"
+          docker build -t $IMG .
+
+          echo "DOCKER | Push Image"
+          docker push $IMG
