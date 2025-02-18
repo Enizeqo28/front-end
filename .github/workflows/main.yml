@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  id-token: write
+  id-token: write # Require write permission to Fetch an OIDC token.
   contents: read
 
 jobs:
@@ -22,26 +22,24 @@ jobs:
         run: echo "CURRENT_BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
 
       - name: AZURE | CLI Login
-        uses: azure/login@v2
+        uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+            enable-AzPSSession: true
 
-      - name: Example Azure CLI Command
-        run: |
-          echo "Executing az account show"
-          az account show
+      - name: DOCKER | Login
+        uses: azure/docker-login@v2
+        with:
+          login-server: atcdevacr.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
 
-      - name: DOCKER | Login, Build and Push
+      - name: DOCKER | Build and Push Docker Image
         env:
           ACR: atcdevacr.azurecr.io
           IMG_NAME: connectify-front
         run: |
-          az login --identity
-          az acr login --name $ACR
 
-          IMG=$ACR/$IMG_NAME-$CURRENT_BRANCH
+          IMG=$ACR/$IMG_NAME:$CURRENT_BRANCH
 
           echo "DOCKER | Build Image"
           docker build -t $IMG .
