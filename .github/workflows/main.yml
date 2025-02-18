@@ -38,7 +38,7 @@ jobs:
           ACR: atcdevacr.azurecr.io
           IMG_NAME: connectify-front
         run: |
-          az login --identity --username $secrets.AZURE_CLIENT_ID
+          az login --identity
           az acr login --name $ACR
 
           IMG=$ACR/$IMG_NAME-$CURRENT_BRANCH
