@@ -15,14 +15,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: GIT | Checkout
+      uses: actions/checkout@v4
 
-      - uses: actions/checkout@v4
+    - name: GIT | Get current branch
+      run: echo "CURRENT_BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
 
+    - name: DOCKER | Login, Build and PUSH
+      env:
+        ACR: atcdevacr.azurecr.io
+        ACR_SUFFIX: azurecr.io
+        IMG_NAME: connectify-front 
+      run: |
+        
+        echo "DOCKER | Azure docker login"
+        az acr login --name $ACR
 
-      - name: Run a one-line script
-        run: echo Hello, world!
+    
+        $IMG = $ACR/$IMG_NAME-$env.CURRENT_BRANCH
 
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+        echo "DOCKER | Build Image"
+        docker build -t $IMG .
+        docker push $IMG 
+
+ 
