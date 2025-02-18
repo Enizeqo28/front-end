@@ -1,44 +1,37 @@
-
-name: Connectify - Front
+name: Build and Push to ACR
 
 on:
-
   push:
-    branches: [ "dev_test" ]
-
-  workflow_dispatch:
+    branches:
+      - main  # Adjust branch as needed
 
 permissions:
-  id-token: write # Require write permission to Fetch an OIDC token.
-  contents: read
-jobs:
+  id-token: write  # Needed for OIDC login
+  contents: read  # Read repo contents
 
-  build:
+jobs:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-    - name: GIT | Checkout
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: GIT | Get current branch
-      run: echo "CURRENT_BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - name: Log in to Azure using OIDC
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          allow-no-subscriptions: true  # Needed if federated identity is tied to a resource, not a subscription
 
-    - name: AZURE | CLI Login
-      uses: azure/login@v2
-      with:
-       client-id: ${{ secrets.AZURE_CLIENT_ID }}
-       tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-       subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Log in to Azure Container Registry
+        run: az acr login --name myregistry
 
-    - uses: azure/docker-login@v2
-      with:
-        login-server: atcdevacr.azurecr.io
-        username: ${{ secrets.AZURE_CLIENT_ID }}
-    - run: |
-            $IMG = $ACR/$IMG_NAME-$env.CURRENT_BRANCH
-    
-            echo "DOCKER | Build Image"
-            docker build -t $IMG .
-            docker push $IMG 
-
- 
+      - name: Build and tag Docker image
+        run: |
+          docker build -t atcdevacr.azurecr.io/connectify-front-dev .
+      
+      - name: Push image to ACR
+        run: |
+          docker push atcdevacr.azurecr.io/connectify-front-dev
