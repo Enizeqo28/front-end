@@ -33,6 +33,7 @@ jobs:
     - uses: azure/docker-login@v2
       with:
         login-server: atcdevacr.azurecr.io
+        username: ${{ secrets.AZURE_CLIENT_ID }}
     - run: |
             $IMG = $ACR/$IMG_NAME-$env.CURRENT_BRANCH
     
