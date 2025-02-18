@@ -3,7 +3,7 @@ name: Build and Push to ACR
 on:
   push:
     branches:
-      - main  # Adjust branch as needed
+      - dev_test  # Adjust branch as needed
 
 permissions:
   id-token: write  # Needed for OIDC login
