@@ -21,11 +21,6 @@ jobs:
       - name: GIT | Get current branch
         run: echo "CURRENT_BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
 
-      - name: AZURE | CLI Login
-        uses: azure/login@v1
-        with:
-            enable-AzPSSession: true
-
       - name: DOCKER | Login
         uses: azure/docker-login@v2
         with:
