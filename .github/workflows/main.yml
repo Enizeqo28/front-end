@@ -41,7 +41,7 @@ jobs:
           az login --identity --username $secrets.AZURE_CLIENT_ID
           az acr login --name $ACR
 
-          IMG=$ACR/$IMG_NAME:$CURRENT_BRANCH
+          IMG=$ACR/$IMG_NAME-$CURRENT_BRANCH
 
           echo "DOCKER | Build Image"
           docker build -t $IMG .
