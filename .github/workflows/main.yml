@@ -34,7 +34,7 @@ jobs:
           IMG_NAME: connectify-front
         run: |
 
-          IMG=$ACR/$IMG_NAME:$CURRENT_BRANCH
+          IMG=$ACR/$IMG_NAME-$CURRENT_BRANCH
 
           echo "DOCKER | Build Image"
           docker build -t $IMG .
