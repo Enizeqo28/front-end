@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Navigation Bar Component – menu items centered
@@ -41,6 +41,7 @@ const ProfileCard = ({
   setIsEditing,
   handleProfilePicChange,
   hiddenFileInputRef,
+  handleSaveProfile,
 }) => (
   <div style={styles.profileCard}>
     <div style={styles.profileContent}>
@@ -81,7 +82,7 @@ const ProfileCard = ({
               style={styles.textarea}
               placeholder="Bio"
             />
-            <button onClick={() => setIsEditing(false)} style={styles.editButton}>
+            <button onClick={handleSaveProfile} style={styles.editButton}>
               Save Profile
             </button>
           </div>
@@ -191,6 +192,71 @@ const Profile = () => {
   const [galleryImages, setGalleryImages] = useState([]);
   const profilePicInputRef = useRef(null);
 
+  // Fetch profile data from the backend
+  const fetchUserProfile = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+      const response = await fetch("http://localhost:8000/users/profile", {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch profile");
+      }
+      const data = await response.json();
+      // Update state with fetched data (adjust property names as needed)
+      setName(data.fullName || data.name);
+      setBio(data.bio);
+      setAge(data.age);
+      setProfilePic(data.profilePic);
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, [navigate]);
+
+  // Save updated profile data to the database
+  const handleSaveProfile = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+      const response = await fetch("http://localhost:8000/users/profile/update", {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: name,
+          age: age,
+          bio: bio,
+          profilePic: profilePic,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update profile");
+      }
+      alert("Profile updated successfully!");
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Error updating profile.");
+    }
+  };
+
   const handleProfilePicChange = (event) => {
     const file = event.target.files[0];
     if (file) setProfilePic(URL.createObjectURL(file));
@@ -241,6 +307,7 @@ const Profile = () => {
               setIsEditing={setIsEditing}
               handleProfilePicChange={handleProfilePicChange}
               hiddenFileInputRef={profilePicInputRef}
+              handleSaveProfile={handleSaveProfile}
             />
             <Gallery
               galleryImages={galleryImages}
@@ -259,14 +326,12 @@ const Profile = () => {
 };
 
 const styles = {
-  // Outer container now takes the full viewport width
   outerContainer: {
     background: "transparent",
     minHeight: "100vh",
     fontFamily: "'Roboto', sans-serif",
     width: "100vw",
   },
-  // Content wrapper remains the same for the inner content
   contentWrapper: {
     background: "rgba(245,236,227,0.4)",
     backgroundImage: "url('./peach.jpg')",
@@ -474,7 +539,6 @@ const styles = {
     display: "flex",
     gap: "10px",
   },
-  // Updated NavBar style to match the MyMatches page (full width)
   navbar: {
     backgroundColor: "#C38282",
     padding: "25px",
@@ -491,7 +555,7 @@ const styles = {
   navButton: {
     background: "none",
     border: "none",
-    color: "white", // white text for nav links
+    color: "white",
     fontSize: "20px",
     fontWeight: "bold",
     cursor: "pointer",

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-// Navigation Bar Component – same as your profile page nav bar
+// Updated NavBar Component – items remain in one row on all devices
 const NavBar = ({ navigate }) => {
   const navItems = [
     { label: "Home", path: "/home" },
@@ -11,13 +11,44 @@ const NavBar = ({ navigate }) => {
     { label: "My Matches", path: "/matches" },
     { label: "Logout", path: "/login" },
   ];
+
+  // Track window width to adjust styling for mobile
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const isMobile = windowWidth < 600;
+
+  const dynamicNavbarStyle = {
+    ...styles.navbar,
+    padding: isMobile ? "15px" : "25px",
+    flexDirection: "row", // always display items in a row
+    overflowX: "auto", // allow horizontal scrolling on mobile if needed
+  };
+
+  const dynamicNavItemsStyle = {
+    ...styles.navItems,
+    flexDirection: "row",
+    gap: isMobile ? "10px" : "20px",
+    alignItems: "center",
+  };
+
+  const dynamicNavButtonStyle = {
+    ...styles.navButton,
+    fontSize: isMobile ? "14px" : "20px",
+  };
+
   return (
-    <nav style={styles.navbar}>
-      <div style={styles.navItems}>
+    <nav style={dynamicNavbarStyle}>
+      <div style={dynamicNavItemsStyle}>
         {navItems.map((item) => (
           <button
             key={item.label}
-            style={styles.navButton}
+            style={dynamicNavButtonStyle}
             onClick={() => navigate(item.path)}
           >
             {item.label}
@@ -28,7 +59,6 @@ const NavBar = ({ navigate }) => {
   );
 };
 
-// Component for displaying current matches with a chat button
 const CurrentMatches = ({ currentMatches, handleChat }) => {
   return (
     <div>
@@ -39,11 +69,7 @@ const CurrentMatches = ({ currentMatches, handleChat }) => {
         currentMatches.map((match) => (
           <div key={match.id} style={styles.matchedUserCard}>
             <div style={styles.matchContent}>
-              <img
-                src={match.photo}
-                alt={match.name}
-                style={styles.matchPhoto}
-              />
+              <img src={match.photo} alt={match.name} style={styles.matchPhoto} />
               <div style={styles.matchDetails}>
                 <p style={styles.matchName}>
                   <strong>
@@ -56,10 +82,7 @@ const CurrentMatches = ({ currentMatches, handleChat }) => {
               </div>
             </div>
             <div style={styles.buttonRow}>
-              <button
-                onClick={() => handleChat(match.id)}
-                style={styles.matchButton}
-              >
+              <button onClick={() => handleChat(match.id)} style={styles.matchButton}>
                 Chat
               </button>
             </div>
@@ -70,7 +93,6 @@ const CurrentMatches = ({ currentMatches, handleChat }) => {
   );
 };
 
-// Component for displaying suggested matches (similar to your profile page)
 const SuggestedMatches = ({ suggestedMatches, handleApproveMatch }) => {
   return (
     <div>
@@ -81,11 +103,7 @@ const SuggestedMatches = ({ suggestedMatches, handleApproveMatch }) => {
         suggestedMatches.map((match) => (
           <div key={match.id} style={styles.matchedUserCard}>
             <div style={styles.matchContent}>
-              <img
-                src={match.photo}
-                alt={match.name}
-                style={styles.matchPhoto}
-              />
+              <img src={match.photo} alt={match.name} style={styles.matchPhoto} />
               <div style={styles.matchDetails}>
                 <p style={styles.matchName}>
                   <strong>
@@ -98,16 +116,10 @@ const SuggestedMatches = ({ suggestedMatches, handleApproveMatch }) => {
               </div>
             </div>
             <div style={styles.buttonRow}>
-              <button
-                onClick={() => handleApproveMatch(match.id)}
-                style={styles.removeButton}
-              >
+              <button onClick={() => handleApproveMatch(match.id)} style={styles.removeButton}>
                 ❌ Remove
               </button>
-              <button
-                onClick={() => handleApproveMatch(match.id)}
-                style={styles.matchButton}
-              >
+              <button onClick={() => handleApproveMatch(match.id)} style={styles.matchButton}>
                 ✅ Match
               </button>
             </div>
@@ -182,17 +194,11 @@ const MatchesPage = () => {
         <div style={styles.contentContainer}>
           {/* Left Column: Current Matches */}
           <div style={styles.column}>
-            <CurrentMatches
-              currentMatches={currentMatches}
-              handleChat={handleChat}
-            />
+            <CurrentMatches currentMatches={currentMatches} handleChat={handleChat} />
           </div>
           {/* Right Column: Suggested Matches */}
           <div style={styles.column}>
-            <SuggestedMatches
-              suggestedMatches={suggestedMatches}
-              handleApproveMatch={handleApproveMatch}
-            />
+            <SuggestedMatches suggestedMatches={suggestedMatches} handleApproveMatch={handleApproveMatch} />
           </div>
         </div>
       </div>
@@ -201,14 +207,12 @@ const MatchesPage = () => {
 };
 
 const styles = {
-  // Outer container takes full viewport width
   outerContainer: {
     background: "transparent",
     minHeight: "100vh",
     fontFamily: "'Roboto', sans-serif",
     width: "100vw",
   },
-  // Same container style as in your profile page
   contentWrapper: {
     background: "rgba(245,236,227,0.4)",
     backgroundImage: "url('./peach.jpg')",
@@ -219,17 +223,15 @@ const styles = {
     boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
     borderRadius: "8px",
     maxWidth: "1200px",
-    width: "100%",
   },
-  // Matches the profile page: flex container without extra wrapping settings
   contentContainer: {
     display: "flex",
+    flexWrap: "wrap",
     gap: "20px",
     alignItems: "stretch",
   },
-  // Use the same column style as in your profile page
   column: {
-    flex: 1,
+    flex: "1 1 300px",
     display: "flex",
     flexDirection: "column",
   },
@@ -297,7 +299,6 @@ const styles = {
     boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
     transition: "background 0.3s, transform 0.3s",
   },
-  // NavBar style exactly matching the profile page
   navbar: {
     backgroundColor: "#C38282",
     padding: "25px",
@@ -315,7 +316,6 @@ const styles = {
     background: "none",
     border: "none",
     color: "white",
-    fontSize: "20px",
     fontWeight: "bold",
     cursor: "pointer",
     transition: "color 0.3s",
