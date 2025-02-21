@@ -60,7 +60,7 @@ const StyledTextField = styled(TextField)({
 const Navbar = () => (
   <AppBar position="fixed" sx={{ background: "#89574c" }}>
     <Toolbar>
-      <img src={logo} alt="Logo" style={{ height: "90px", marginRight: "20px" }} />
+      <img src={logo} alt="Logo" style={{ height: "90px", marginRight: "10px" }} />
       <Typography variant="h6" sx={{ flexGrow: 1 }}>Connectify, Find Your People Today</Typography>
       <Button color="inherit" href="/">Home</Button>
       <Button color="inherit" href="/about">About Us</Button>
