@@ -129,16 +129,17 @@ const ChatPage = () => {
   const navigate = useNavigate();
 
   const [matches] = useState([
-    { id: 1, name: "Alice", photo: "https://via.placeholder.com/100", lastMessage: "Hi there!" },
-    { id: 2, name: "Bob", photo: "https://via.placeholder.com/100", lastMessage: "What's up?" },
-    { id: 3, name: "Charlie", photo: "https://via.placeholder.com/100", lastMessage: "Let's catch up!" },
-    { id: 4, name: "Eni Zeqo", photo: "https://via.placeholder.com/100", lastMessage: "Let's catch up!" },
-    { id: 5, name: "Kunal", photo: "https://via.placeholder.com/100", lastMessage: "Let's catch up!" },
-    { id: 6, name: "Atif", photo: "https://via.placeholder.com/100", lastMessage: "Let's catch up!" },
-    { id: 7, name: "Swagat", photo: "https://via.placeholder.com/100", lastMessage: "Let's catch up!" },
-    { id: 8, name: "Faizal", photo: "https://via.placeholder.com/100", lastMessage: "Let's catch up!" },
-    { id: 9, name: "Arjoo", photo: "https://via.placeholder.com/100", lastMessage: "Let's catch up!" },
+    { id: 1, name: "Alice", photo: "https://via.placeholder.com/100", lastMessage: "Hey! How have you been?" },
+    { id: 2, name: "Bob", photo: "https://via.placeholder.com/100", lastMessage: "Did you check out that new movie?" },
+    { id: 3, name: "Charlie", photo: "https://via.placeholder.com/100", lastMessage: "How was your weekend?" },
+    { id: 4, name: "Eni Zeqo", photo: "https://via.placeholder.com/100", lastMessage: "Are we still on for dinner?" },
+    { id: 5, name: "Kunal", photo: "https://via.placeholder.com/100", lastMessage: "Let's plan a trip soon!" },
+    { id: 6, name: "Atif", photo: "https://via.placeholder.com/100", lastMessage: "Hope you're having a great day!" },
+    { id: 7, name: "Swagat", photo: "https://via.placeholder.com/100", lastMessage: "When are you free to catch up?" },
+    { id: 8, name: "Faizal", photo: "https://via.placeholder.com/100", lastMessage: "Let’s grab a coffee sometime!" },
+    { id: 9, name: "Arjoo", photo: "https://via.placeholder.com/100", lastMessage: "I have some exciting news to share!" },
   ]);
+  
 
   const [selectedMatch, setSelectedMatch] = useState(null);
   const [messages, setMessages] = useState([]);
