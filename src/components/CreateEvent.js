@@ -19,10 +19,10 @@ const BackgroundContainer = styled("div")({
 });
 
 const FormContainer = styled(Container)({
-  background: "rgba(253, 252, 230, 0.8)",
+  background: "rgba(253, 252, 230, 0.4)",
   padding: "90px",
   borderRadius: "10px",
-  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.8)",
   width: "90%",
   maxWidth: "600px",
   minWidth: "650px",
@@ -110,7 +110,7 @@ const CreateEvent = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Event style={{ color: "#89574c" }} />
+                  <Event style={{ color: "blue" }} />
                 </InputAdornment>
               ),
             }}
@@ -125,7 +125,7 @@ const CreateEvent = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <CalendarToday style={{ color: "#89574c" }} />
+                  <CalendarToday style={{ color: "green" }} />
                 </InputAdornment>
               ),
             }}
@@ -140,7 +140,7 @@ const CreateEvent = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <AccessTime style={{ color: "#89574c" }} />
+                  <AccessTime style={{ color: "orange" }} />
                 </InputAdornment>
               ),
             }}
@@ -155,7 +155,7 @@ const CreateEvent = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <LocationOn style={{ color: "#89574c" }} />
+                  <LocationOn style={{ color: "green" }} />
                 </InputAdornment>
               ),
             }}
@@ -172,7 +172,7 @@ const CreateEvent = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Description style={{ color: "#89574c" }} />
+                  <Description style={{ color: "purple" }} />
                 </InputAdornment>
               ),
             }}
@@ -188,7 +188,7 @@ const CreateEvent = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Category style={{ color: "#89574c" }} />
+                  <Category style={{ color: "gray" }} />
                 </InputAdornment>
               ),
             }}
