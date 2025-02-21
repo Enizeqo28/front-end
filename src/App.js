@@ -9,6 +9,7 @@ import peachImage from "./peach.jpg"; // Background image
 import Signup from "./components/Signup";
 import WelcomePage from "./components/WelcomePage";
 import ChatPage from "./components/ChatPage";
+import CreateEvent from "./components/CreateEvent";
 
 
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<WelcomePage />} />
           <Route path="/ChatPage" element={<ChatPage/>} />
+		  <Route path="/createevent" element={<CreateEvent />} /> 
         </Routes>
       </div>
     </Router>
