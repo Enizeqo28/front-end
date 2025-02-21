@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import { TextField, Button, Container, Typography, Box, InputAdornment } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { AppBar, Toolbar, Typography, Button } from "@mui/material";
+import { TextField, Container, Box, InputAdornment } from "@mui/material";
 import { AccountCircle, Email, Lock, CalendarToday } from "@mui/icons-material";
+import { styled } from "@mui/material/styles";
 import peachImage from "../peach.jpg"; // Ensure correct path
+import logo from "../logo.jpg"; // Replace with actual logo path
+import axios from "axios";
 
 const BackgroundContainer = styled("div")({
   backgroundImage: `url(${peachImage})`,
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
   backgroundPosition: "center",
-  height: "100vh",
+  minHeight: "100vh",
   display: "flex",
-  justifyContent: "center",
+  flexDirection: "column",
   alignItems: "center",
   position: "relative",
 });
@@ -23,15 +26,16 @@ const Overlay = styled("div")({
 });
 
 const FormContainer = styled(Container)({
-  background: "rgba(253, 252, 230, 0.45)",
+  background: "rgba(253, 252, 230, 0.4)",
   padding: "90px",
   borderRadius: "10px",
-  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.6)",
+  boxShadow: "0px 8px 20px rgba(0, 0, 0, 20)",
   width: "90%",
   maxWidth: "600px",
-  minWidth: "500px",
+  minWidth: "650px",
   textAlign: "center",
   zIndex: 2,
+   marginTop: "120px", // Space from navbar
 });
 
 const StyledButton = styled(Button)({
@@ -46,13 +50,17 @@ const StyledButton = styled(Button)({
   },
 });
 
-const StyledTextField = styled(TextField)({
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": { borderColor: "#89574c" },
-    "&:hover fieldset": { borderColor: "#89574c" },
-    "&.Mui-focused fieldset": { borderColor: "#89574c", borderWidth: "5px" },
-  },
-});
+const Navbar = () => (
+  <AppBar position="fixed" sx={{ background: "#89574c" }}>
+    <Toolbar>
+      <img src={logo} alt="Logo" style={{ height: "90px", marginRight: "20px" }} />
+      <Typography variant="h6" sx={{ flexGrow: 1 }}>Connectify, Find Your People Today</Typography>
+      <Button color="inherit" href="/">Home</Button>
+      <Button color="inherit" href="/about">About Us</Button>
+      <Button color="inherit" href="/login">Log In</Button>
+    </Toolbar>
+  </AppBar>
+);
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -83,115 +91,39 @@ const Signup = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("User Signed Up:", formData);
-      // Backend API call here
+      try {
+        const response = await axios.post("http://localhost:8000/users/create/", formData);
+        console.log("User Signed Up Successfully:", response.data);
+        alert("Signup successful! Please log in.");
+      } catch (error) {
+        console.error("Signup failed:", error.response?.data || error.message);
+        alert(error.response?.data?.message || "Signup failed. Please try again.");
+      }
     }
   };
 
   return (
     <BackgroundContainer>
+      <Navbar />
       <Overlay />
       <FormContainer>
         <Typography variant="h4" gutterBottom style={{ fontWeight: "bold", color: "#89574c" }}>
-          Sign Up Today
+          Sign Up to Connectify
         </Typography>
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-          <StyledTextField 
-            label="Full Name" 
-            name="fullName" 
-            value={formData.fullName} 
-            onChange={handleChange} 
-            error={!!errors.fullName} 
-            helperText={errors.fullName} 
-            required fullWidth 
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <AccountCircle style={{ color: "red" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <StyledTextField 
-            label="Email" 
-            type="email" 
-            name="email" 
-            value={formData.email} 
-            onChange={handleChange} 
-            error={!!errors.email} 
-            helperText={errors.email} 
-            required fullWidth 
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Email style={{ color: "blue" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <StyledTextField 
-            label="Age" 
-            type="number" 
-            name="age" 
-            value={formData.age} 
-            onChange={handleChange} 
-            error={!!errors.age} 
-            helperText={errors.age} 
-            required fullWidth 
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <CalendarToday style={{ color: "black" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <StyledTextField 
-            label="Password" 
-            type="password" 
-            name="password" 
-            value={formData.password} 
-            onChange={handleChange} 
-            error={!!errors.password} 
-            helperText={errors.password} 
-            required fullWidth 
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Lock style={{ color: "green" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <StyledTextField 
-            label="Confirm Password" 
-            type="password" 
-            name="confirmPassword" 
-            value={formData.confirmPassword} 
-            onChange={handleChange} 
-            error={!!errors.confirmPassword} 
-            helperText={errors.confirmPassword} 
-            required fullWidth 
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Lock style={{ color: "#89574c" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
+          <TextField label="Full Name" name="fullName" value={formData.fullName} onChange={handleChange} error={!!errors.fullName} helperText={errors.fullName} required fullWidth InputProps={{ startAdornment: (<InputAdornment position="start"><AccountCircle style={{ color: "red" }} /></InputAdornment>), }} />
+          <TextField label="Email" type="email" name="email" value={formData.email} onChange={handleChange} error={!!errors.email} helperText={errors.email} required fullWidth InputProps={{ startAdornment: (<InputAdornment position="start"><Email style={{ color: "blue" }} /></InputAdornment>), }} />
+          <TextField label="Age" type="number" name="age" value={formData.age} onChange={handleChange} error={!!errors.age} helperText={errors.age} required fullWidth InputProps={{ startAdornment: (<InputAdornment position="start"><CalendarToday style={{ color: "black" }} /></InputAdornment>), }} />
+          <TextField label="Password" type="password" name="password" value={formData.password} onChange={handleChange} error={!!errors.password} helperText={errors.password} required fullWidth InputProps={{ startAdornment: (<InputAdornment position="start"><Lock style={{ color: "green" }} /></InputAdornment>), }} />
+          <TextField label="Confirm Password" type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} error={!!errors.confirmPassword} helperText={errors.confirmPassword} required fullWidth InputProps={{ startAdornment: (<InputAdornment position="start"><Lock style={{ color: "#89574c" }} /></InputAdornment>), }} />
           <StyledButton variant="contained" type="submit">Sign Up</StyledButton>
         </form>
-        {/* Ensure the login link is visible */}
         <Box mt={2}>
           <Typography variant="body2">
-            Already have an account?{" "}
-            <a href="/login" style={{ color: "#89574c", fontWeight: "bold", textDecoration: "none" }}>
-              Log in here
-            </a>
+            Already have an account? <a href="/login" style={{ color: "#89574c", fontWeight: "bold", textDecoration: "none" }}>Log in here</a>
           </Typography>
         </Box>
       </FormContainer>

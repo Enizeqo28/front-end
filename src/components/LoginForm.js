@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
-import { TextField, Button, Container, Typography, Box, InputAdornment } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
-import { Email, Lock } from '@mui/icons-material';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AppBar, Toolbar, Typography, Button, Container, Box, TextField, InputAdornment } from "@mui/material";
+import { Email, Lock } from "@mui/icons-material";
+import { styled } from "@mui/material/styles";
 import peachImage from "../peach.jpg"; // Ensure correct path
+import logo from "../logo.jpg"; // Replace with actual logo path
 
 const BackgroundContainer = styled("div")({
   backgroundImage: `url(${peachImage})`,
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
   backgroundPosition: "center",
-  height: "100vh",
+  minHeight: "100vh",
   display: "flex",
-  justifyContent: "center",
+  flexDirection: "column",
   alignItems: "center",
+  justifyContent: "center",
+  paddingTop: "80px", // Adds space between navbar and login box
   position: "relative",
 });
 
@@ -25,12 +28,11 @@ const Overlay = styled("div")({
 
 const FormContainer = styled(Container)({
   background: "rgba(253, 252, 230, 0.4)",
-  padding: "30px",
+  padding: "60px 30px",
   borderRadius: "10px",
-  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.6)",
-  width: "90%",
+  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.4)",
+  width: "100%",
   maxWidth: "600px",
-  minWidth: "450px",
   textAlign: "center",
   zIndex: 2,
 });
@@ -55,28 +57,50 @@ const StyledTextField = styled(TextField)({
   },
 });
 
+const Navbar = () => (
+  <AppBar position="fixed" sx={{ background: "#89574c" }}>
+    <Toolbar>
+      <img src={logo} alt="Logo" style={{ height: "90px", marginRight: "20px" }} />
+      <Typography variant="h6" sx={{ flexGrow: 1 }}>Connectify, Find Your People Today</Typography>
+      <Button color="inherit" href="/">Home</Button>
+      <Button color="inherit" href="/about">About Us</Button>
+      <Button color="inherit" href="/signup">Register</Button>
+    </Toolbar>
+  </AppBar>
+);
+
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!email || !password) {
-      setErrorMessage('Please fill in both fields');
+      setErrorMessage("Please fill in both fields");
       return;
     }
-
-    // Implement login logic here (e.g., API call for authentication)
-    console.log("Logged in with", { email, password });
-    // After successful login, redirect to the dashboard or main page
-    // navigate('/dashboard');  // Uncomment after setting up routes
+    try {
+      const response = await fetch("http://localhost:8000/users/login/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Login failed");
+      }
+      localStorage.setItem("authToken", data.token);
+      navigate("/");
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
   };
 
   return (
     <BackgroundContainer>
+      <Navbar />
       <Overlay />
       <FormContainer>
         <Typography variant="h4" gutterBottom style={{ fontWeight: "bold", color: "#89574c" }}>
