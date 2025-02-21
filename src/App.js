@@ -8,6 +8,9 @@ import AboutPage from "./components/AboutPage";
 import peachImage from "./peach.jpg"; // Background image
 import Signup from "./components/Signup";
 import WelcomePage from "./components/WelcomePage";
+import ChatPage from "./components/ChatPage";
+
+
 const App = () => {
   const appStyles = {
     backgroundImage: `url(${peachImage})`,
@@ -17,7 +20,7 @@ const App = () => {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   };
 
   return (
@@ -29,7 +32,8 @@ const App = () => {
           <Route path="/about" element={<AboutPage />} /> 
           <Route path="/profile" element={<Profile />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={<WelcomePage />} />		
+          <Route path="/" element={<WelcomePage />} />
+          <Route path="/ChatPage" element={<ChatPage/>} />
         </Routes>
       </div>
     </Router>

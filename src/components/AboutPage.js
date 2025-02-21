@@ -48,12 +48,12 @@ const AboutPage = () => {
             <h2>Meet the Team</h2>
             <div className="team">
               <div className="team-member">
-                <img src="https://media-yyz1-1.cdn.whatsapp.net/v/t61.24694-24/473396367_1678596543064566_7931647013761059272_n.jpg?ccb=11-4&oh=01_Q5AaIHlw6XbOsbi1tZW96sqy3vthPFNtmTIOptdyzGb3aQ9J&oe=67B14781&_nc_sid=5e03e0&_nc_cat=104" alt="Team Member" />
+                <img src="https://media-yyz1-1.cdn.whatsapp.net/v/t61.24694-24/473396367_1678596543064566_7931647013761059272_n.jpg?ccb=11-4&oh=01_Q5AaIIDWHx1B3ABNpx32-1zbDfKWZLyzwjFlwbMkJFLIP5uL&oe=67C50E01&_nc_sid=5e03e0&_nc_cat=104" alt="Team Member" />
                 <h3>Shailendra</h3>
                 <p>Frontend</p>
               </div>
               <div className="team-member">
-                <img src="https://media-yyz1-1.cdn.whatsapp.net/v/t61.24694-24/473396411_613803474517207_7371020398974454938_n.jpg?ccb=11-4&oh=01_Q5AaIMt7CF2EmiO5X6FLL9yvk_VQrWrPNgBHDHlIiJzE2OCN&oe=67B121F1&_nc_sid=5e03e0&_nc_cat=106" alt="Team Member" />
+                <img src="https://media-yyz1-1.cdn.whatsapp.net/v/t61.24694-24/473396411_613803474517207_7371020398974454938_n.jpg?ccb=11-4&oh=01_Q5AaIB5_ifmhHU70NtZP463tzx2gAaCm9hSd10X0OL7PT68J&oe=67C4E871&_nc_sid=5e03e0&_nc_cat=106" alt="Team Member" />
                 <h3>Eni Zeqo</h3>
                 <p>Frontend</p>
               </div>
@@ -126,6 +126,8 @@ const styles = {
     maxWidth: "1200px",
     width: "100%",
     padding: "20px",
+    margin: "20px",
+
   },
   contentContainer: {
     display: "grid",
