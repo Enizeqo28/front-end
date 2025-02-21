@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AppBar, Toolbar, Typography, Button, TextField, MenuItem, Container, Box, InputAdornment } from "@mui/material";
+import { AppBar, Toolbar, Typography, Button, TextField, MenuItem, Container, Box, InputAdornment, Modal } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Event, CalendarToday, AccessTime, LocationOn, Description, Category } from "@mui/icons-material";
 import peachImage from "../peach.jpg"; // Ensure correct path
@@ -64,6 +64,7 @@ const CreateEvent = () => {
     description: "",
     category: "",
   });
+  const [previewOpen, setPreviewOpen] = useState(false); // Preview modal state
 
   const categories = ["Outdoor", "Tech", "Arts & Crafts", "Food & Drinks", "Networking", "Other"];
 
@@ -83,6 +84,14 @@ const CreateEvent = () => {
     }
   };
 
+  const handlePreview = () => {
+    setPreviewOpen(true); // Open preview modal
+  };
+
+  const handleClosePreview = () => {
+    setPreviewOpen(false); // Close preview modal
+  };
+
   return (
     <BackgroundContainer>
       <Navbar />
@@ -91,13 +100,13 @@ const CreateEvent = () => {
           Host an Event
         </Typography>
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-          <TextField 
-            label="Event Name" 
-            name="name" 
-            value={eventData.name} 
-            onChange={handleChange} 
-            required 
-            fullWidth 
+          <TextField
+            label="Event Name"
+            name="name"
+            value={eventData.name}
+            onChange={handleChange}
+            required
+            fullWidth
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -106,13 +115,13 @@ const CreateEvent = () => {
               ),
             }}
           />
-          <TextField 
-            type="date" 
-            name="date" 
-            value={eventData.date} 
-            onChange={handleChange} 
-            required 
-            fullWidth 
+          <TextField
+            type="date"
+            name="date"
+            value={eventData.date}
+            onChange={handleChange}
+            required
+            fullWidth
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -121,13 +130,13 @@ const CreateEvent = () => {
               ),
             }}
           />
-          <TextField 
-            type="time" 
-            name="time" 
-            value={eventData.time} 
-            onChange={handleChange} 
-            required 
-            fullWidth 
+          <TextField
+            type="time"
+            name="time"
+            value={eventData.time}
+            onChange={handleChange}
+            required
+            fullWidth
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -136,13 +145,13 @@ const CreateEvent = () => {
               ),
             }}
           />
-          <TextField 
-            label="Location" 
-            name="location" 
-            value={eventData.location} 
-            onChange={handleChange} 
-            required 
-            fullWidth 
+          <TextField
+            label="Location"
+            name="location"
+            value={eventData.location}
+            onChange={handleChange}
+            required
+            fullWidth
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -151,15 +160,15 @@ const CreateEvent = () => {
               ),
             }}
           />
-          <TextField 
-            label="Description" 
-            name="description" 
-            value={eventData.description} 
-            onChange={handleChange} 
-            required 
-            fullWidth 
-            multiline 
-            rows={3} 
+          <TextField
+            label="Description"
+            name="description"
+            value={eventData.description}
+            onChange={handleChange}
+            required
+            fullWidth
+            multiline
+            rows={3}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -168,14 +177,14 @@ const CreateEvent = () => {
               ),
             }}
           />
-          <TextField 
-            select 
-            label="Category" 
-            name="category" 
-            value={eventData.category} 
-            onChange={handleChange} 
-            required 
-            fullWidth 
+          <TextField
+            select
+            label="Category"
+            name="category"
+            value={eventData.category}
+            onChange={handleChange}
+            required
+            fullWidth
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -188,9 +197,47 @@ const CreateEvent = () => {
               <MenuItem key={option} value={option}>{option}</MenuItem>
             ))}
           </TextField>
+          <StyledButton variant="contained" onClick={handlePreview}>Preview</StyledButton>
           <StyledButton variant="contained" type="submit">Create Event</StyledButton>
         </form>
       </FormContainer>
+
+      {/* Event Preview Modal */}
+      <Modal
+        open={previewOpen}
+        onClose={handleClosePreview}
+        aria-labelledby="event-preview-modal"
+        aria-describedby="event-preview-description"
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            bgcolor: 'background.paper',
+            border: '2px solid #000',
+            boxShadow: 24,
+            p: 4,
+            width: '400px',
+            maxWidth: '80%',
+          }}
+        >
+          <Typography variant="h5" gutterBottom>Event Preview</Typography>
+          <Box>
+            <Typography variant="body1"><strong>Event Name:</strong> {eventData.name}</Typography>
+            <Typography variant="body1"><strong>Date:</strong> {eventData.date}</Typography>
+            <Typography variant="body1"><strong>Time:</strong> {eventData.time}</Typography>
+            <Typography variant="body1"><strong>Location:</strong> {eventData.location}</Typography>
+            <Typography variant="body1"><strong>Description:</strong> {eventData.description}</Typography>
+            <Typography variant="body1"><strong>Category:</strong> {eventData.category}</Typography>
+          </Box>
+          <Box sx={{ mt: 2 }}>
+            <Button onClick={handleClosePreview} variant="outlined" sx={{ mr: 2 }}>Close</Button>
+            <Button onClick={handleSubmit} variant="contained" color="success">Confirm and Create</Button>
+          </Box>
+        </Box>
+      </Modal>
     </BackgroundContainer>
   );
 };
