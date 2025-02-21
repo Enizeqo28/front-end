@@ -35,7 +35,7 @@ const FormContainer = styled(Container)({
   minWidth: "650px",
   textAlign: "center",
   zIndex: 2,
-   marginTop: "110px", // Space from navbar
+   marginTop: "120px", // Space from navbar
 });
 
 const StyledButton = styled(Button)({
