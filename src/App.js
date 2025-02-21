@@ -8,8 +8,6 @@ import AboutPage from "./components/AboutPage";
 import peachImage from "./peach.jpg"; // Background image
 import Signup from "./components/Signup";
 import WelcomePage from "./components/WelcomePage";
-
-
 const App = () => {
   const appStyles = {
     backgroundImage: `url(${peachImage})`,
@@ -31,7 +29,7 @@ const App = () => {
           <Route path="/about" element={<AboutPage />} /> 
           <Route path="/profile" element={<Profile />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={<WelcomePage />} />		  
+          <Route path="/" element={<WelcomePage />} />		
         </Routes>
       </div>
     </Router>
